@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.springframework.web.servlet.view.RedirectView;
 
 
@@ -62,6 +63,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 	 * 在controller前拦截
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+		if (object instanceof ResourceHttpRequestHandler) {
+			return true;
+		}
+
 		HandlerMethod handlerMethod=(HandlerMethod)object;
 		JAuth jauthType =handlerMethod.getBean().getClass().getAnnotation(JAuth.class);
 		if(jauthType!=null && jauthType.auth()==Permission.SKIP_AUTH){

@@ -28,6 +28,7 @@ public class SimpleJdbcTemplate extends JdbcTemplate{
 	
 	protected SimpleJdbcInsert simpleJdbcInsert;
 	public SimpleJdbcTemplate(DataSource dataSource){
+		super(dataSource);
 		jdbcTemplate=new JdbcTemplate(dataSource);
 		namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		simpleJdbcInsert=new SimpleJdbcInsert(dataSource);

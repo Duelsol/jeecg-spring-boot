@@ -22,7 +22,7 @@ import org.jeecgframework.web.cgform.entity.config.CgFormFieldEntity;
 import org.jeecgframework.web.cgform.entity.config.CgFormHeadEntity;
 import org.jeecgframework.web.cgform.exception.DBException;
 import org.jeecgframework.web.cgform.service.config.DbTableHandleI;
-import org.springframework.orm.hibernate4.SessionFactoryUtils;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -156,17 +156,18 @@ public class DbTableProcess {
 //       .setProperty("hibernate.dialect",propertiesUtil.readProperty("hibernate.dialect"))
 //       .setProperty("hibernate.connection.url",propertiesUtil.readProperty("jdbc.url.jeecg"))
 //       .setProperty("hibernate.connection.driver_class",propertiesUtil.readProperty("jdbc.driver.class")); 
-//       
-			SchemaExport dbExport;
-			dbExport = new SchemaExport(newconf,SessionFactoryUtils.getDataSource(session.getSessionFactory()).getConnection());
-			dbExport.execute(true, true, false, true);
 
-			//抛出执行异常，抛出第一个即可  
-			@SuppressWarnings("unchecked")
-			List<Exception> exceptionList = dbExport.getExceptions();
-			for (Exception exception : exceptionList) {
-				throw new DBException(exception.getMessage());
-			}
+		// MARK: Hibernate从4升级成5后报错
+		/*SchemaExport dbExport;
+		dbExport = new SchemaExport(newconf,SessionFactoryUtils.getDataSource(session.getSessionFactory()).getConnection());
+		dbExport.execute(true, true, false, true);
+
+		//抛出执行异常，抛出第一个即可
+		@SuppressWarnings("unchecked")
+		List<Exception> exceptionList = dbExport.getExceptions();
+		for (Exception exception : exceptionList) {
+			throw new DBException(exception.getMessage());
+		}*/
 
 	}
 

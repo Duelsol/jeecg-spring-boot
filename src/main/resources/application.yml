@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: jeecg-spring-boot
+
+server:
+  port: 8080
+  servlet:
+    context-path: /index.jsp
+    session:
+      timeout: 1800

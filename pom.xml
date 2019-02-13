@@ -5,17 +5,19 @@
 	<artifactId>jeecg</artifactId>
 	<version>3.8</version>
 	<packaging>war</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.4.RELEASE</version>
+		<relativePath/>
+	</parent>
 	
 	<properties>
 		<!-- 自定义依赖包 -->
         <codegenerate.version>3.6.4</codegenerate.version>
         <jeecg-common-plugin-ui.version>1.0.0</jeecg-common-plugin-ui.version>
 
-		<!-- springmvc -->
-		<spring.version>4.0.9.RELEASE</spring.version>
-		<!-- hibernate -->
-		<hibernate.version>4.1.0.Final</hibernate.version>
-		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
 		<!-- minidao -->
 		<minidao.version>1.6.7</minidao.version>
 
@@ -85,11 +87,10 @@
 		<!-- kisso 单点登陆 -->
 		<kisso.version>3.6.11</kisso.version>
 		<!-- jedis -->
-		<spring-data-redis.version>1.6.2.RELEASE</spring-data-redis.version>
 		<jedis.version>2.9.0</jedis.version>
 		<!--swagger2-->
 		<springfox-swagger2.version>2.4.0</springfox-swagger2.version>
-		<jackson-databind.version>2.5.1</jackson-databind.version>
+		<jackson-databind.version>2.9.5</jackson-databind.version>
 		<!-- jjwt -->
 		<jjwt.version>0.9.0</jjwt.version>
 		
@@ -100,7 +101,6 @@
 		<jeecg-p3-biz-mail.version>1.0.0</jeecg-p3-biz-mail.version>
 		
 		<!--maven插件变量-->
-		<tomcat.version>2.2</tomcat.version>
 		<jetty.version>7.6.14.v20131031</jetty.version>
 		<webserver.port>8080</webserver.port>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -135,6 +135,44 @@
     </repositories>
 
 	<dependencies>
+        <!-- Spring Boot begin -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Spring Boot end -->
 
 		<!-- 自定义的依赖包  begin -->
 		<!-- codegenerate -->
@@ -154,60 +192,8 @@
           	<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jeecg-common-plugin-ui-1.0.0-20180813.jar</systemPath>
 		</dependency>
 		<!-- 自定义的依赖包  end -->
-		
-		<!-- SPRING start -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<!-- spring orm -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<!-- spring mvc -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<!-- SPRING end -->
-		<!-- web begin Spring MVC Test Framework 需要 servlet-api 3.0 以上  -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.0</version>
-			<scope>provided</scope>
-			<exclusions>
-            	<exclusion>
-            		<groupId>javax.servlet</groupId>
-            		<artifactId>servlet-api</artifactId>
-            	</exclusion>
-            </exclusions>
-		</dependency>
+
+		<!-- WEB begin -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -215,28 +201,6 @@
 		</dependency>
 		<!-- WEB end -->
 
-		<!-- hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<!-- JSR303 Bean Validator -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate-validator.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			<version>${hibernate-validator.version}</version>
-		</dependency>
 		<!-- minidao -->
 		<dependency>
 			<groupId>org.jeecgframework</groupId>
@@ -263,7 +227,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		
 		<!--  mysql -->
@@ -524,11 +487,6 @@
 		
 		<!-- redis cache start -->
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>${spring-data-redis.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
@@ -631,26 +589,20 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-	        <plugin>  
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+	        <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>  
                 <version>2.3.2</version>  
                 <configuration>  
-                    <source>1.7</source>  
-                    <target>1.7</target>  
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>  
             </plugin>
-            <!-- tomcat7插件 -->
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>${tomcat.version}</version> 
-				<configuration>
-					<port>${webserver.port}</port>
-					<path>/${project.artifactId}</path>
-					<uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-				</configuration>
-			</plugin>
 			<!-- jetty插件 -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -683,9 +635,10 @@
 		        </configuration>  
 		    </plugin>
 		</plugins>
+        <sourceDirectory>${pom.basedir}/src/main/java</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>src/main/java</directory>
+				<directory>${pom.basedir}/src/main/java</directory>
 				<includes>
 					<include>**/*.xml</include>
 					<include>**/*.sql</include>
@@ -694,12 +647,18 @@
 				<filtering>false</filtering>
 			</resource>
 			<resource>
-				<directory>src/main/resources</directory>
+				<directory>${pom.basedir}/src/main/resources</directory>
 			</resource>
+            <resource>
+                <directory>${pom.basedir}/src/main/webapp</directory>
+                <excludes>
+                    <exclude>**/**</exclude>
+                </excludes>
+            </resource>
 		</resources>
 		<testResources>
 			<testResource>
-				<directory>src/test/java</directory>
+				<directory>${pom.basedir}/src/test/java</directory>
 				<includes>
 					<include>**/*.xml</include>
 					<include>**/*.sql</include>
@@ -708,7 +667,7 @@
 				<filtering>false</filtering>
 			</testResource>
 			<testResource>
-				<directory>src/test/resources</directory>
+				<directory>${pom.basedir}/src/test/resources</directory>
 			</testResource>
 		</testResources>
 	</build>

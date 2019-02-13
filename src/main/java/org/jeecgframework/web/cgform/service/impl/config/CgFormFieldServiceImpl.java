@@ -40,7 +40,7 @@ import org.jeecgframework.web.cgform.service.impl.config.util.ExtendJsonConvert;
 import org.jeecgframework.web.cgform.util.PublicUtil;
 import org.jeecgframework.web.system.pojo.base.TSOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.SessionFactoryUtils;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
